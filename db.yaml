@@ -3,6 +3,11 @@
   become: yes
   vars:
     sudheer: db.sudheerdevopsengineer.online
+  vars_prompt:
+  - name: secretpassword
+    prompt: please enter the password
+    private: no
+      
   tasks:
   - name: Install my sql server
     ansible.builtin.dnf:
@@ -25,7 +30,7 @@
   - name: Setup username and Password
     community.mysql.mysql_info:
      login_user: root
-     login_password: ExpenseApp@1
+     login_password: "{{ secretpassword }}"
      login_host: "{{sudheer}}"
      filter: version
     ignore_errors: yes
@@ -35,5 +40,7 @@
     ansible.builtin.debug:
      msg: "the error output: {{vinni}} "
 
-  
+  - name: setup root password
+    ansible.builtin.command: "mysql_secure_installation --set-root-pass {{secretpassword}}"
+    when: secretpassword.failed is true
 
