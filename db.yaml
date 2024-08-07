@@ -32,7 +32,7 @@
     register: vinni
   
   - name: save the output
-    ansibile.builtin.debug:
+    ansible.builtin.debug:
      msg: "the error output: {{vinni}} "
 
   
