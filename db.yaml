@@ -1,0 +1,39 @@
+- name: configure the db server
+  hosts: db
+  become: yes
+  vars:
+    sudheer: db.sudheerdevopsengineer.online
+  tasks:
+  - name: Install my sql server
+    ansible.builtin.dnf:
+     name: mysql-server
+     state: latest
+
+  - name: Start and enabled MYSQL
+    ansible.builtin.service:
+     name: mysqld
+     state: started 
+     enabled: yes
+
+  - name: Install the python dependecies
+    ansible.builtin.pip:
+      name:
+      - PYMYSQL
+      - cryptography
+    executable: pip3.9
+    
+  - name: Setup username and Password
+    community.mysql.mysql_info:
+     login_user: root
+     login_password: ExpenseApp@1
+     login_host: "{{sudheer}}"
+     filter: version
+    ignore_errors: yes
+    register: vinni
+  
+  - name: save the output
+    ansibile.builtin.debug:
+     msg: "the error output: {{vinni}} "
+
+  
+
