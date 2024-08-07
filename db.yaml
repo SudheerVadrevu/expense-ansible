@@ -13,7 +13,7 @@
     ansible.builtin.service:
      name: mysqld
      state: installed
-     enabled: yes
+     enabled:yes
 
   - name: Install the python dependecies
     ansible.builtin.pip:
