@@ -2,6 +2,8 @@
   hosts: backend
   become: yes
   vars:
+    madhurai: ExpenseApp@1
+    devuda: db.sudheerdevopsengineer.online
 
   tasks:
   - name: disable the nodejs
@@ -12,8 +14,11 @@
   
   - name: install node -js
     ansible.builtin.dnf:
-      name: nodejs
+      name: "{{ item }}"
       state: installed
+      loop:
+      - nodejs
+      - mysql
   
   - name: add the user
     ansible.builtin.user:
@@ -44,5 +49,26 @@
     ansible.builtin.copy:
      src: backend.service
      dest: /etc/systemd/system/backend.service
+  
+  - name: install python mysql dependencies
+    ansible.builtin.pip:
+      name:
+      - PyMySQL
+      - cryptography
+      executable: pip3.9
+  
+  - name: import data into mysql
+    community.mysql.mysql_db:
+    login_user: root
+    login_password: "{{ madhurai }}"
+    login_host: "{{ devuda }}"
+    target: /app/schema/backend.sql
+    state: import
+    name: all
+  - name: dameon reload
+    ansible.builtin.systemd_service:
+     daemon-reload: true
+
+
 
   
