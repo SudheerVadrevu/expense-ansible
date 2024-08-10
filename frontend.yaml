@@ -18,5 +18,4 @@
     - name: create new website
       ansible.builtin.file:
         path: /usr/share/nginx/html
-        state: latest
-        
+        state: directory
