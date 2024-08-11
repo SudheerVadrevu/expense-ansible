@@ -1,8 +1,8 @@
 - name: configure mysql database
-  hosts: backend
+  hosts: db
   become: yes
   vars:
-    vinni: backend.sudheerdevopsengineer.online
+    vinni: db.sudheerdevopsengineer.online
   vars_prompt:
   - name: rangola
     prompt: please enter the password
