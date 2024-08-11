@@ -18,6 +18,7 @@
         login_user: root
         login_password: ExpenseApp@1
         login_hosts: "{{ vinni }}"
+        filter: version
       ignore_errors: yes
       register: sudheer
     - name: store the output
