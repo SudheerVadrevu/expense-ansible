@@ -1,0 +1,24 @@
+- name: configure mysql database
+  hosts: db
+  become: yes
+  tasks:
+    - name: installing my-sql
+      ansible.builtin.dnf:
+        name: mysql
+        state: latest
+    - name: Start and Enable 
+      ansible.builtin.service:
+        name: mysqld
+        state: started
+        enabled: yes
+    - name: DB Connection
+      community.mysql.mysql_info:
+        login_user: root
+        login_password: ExpenseApp@1
+        login_hosts: "{{ vinni }}"
+      ignore_errors: yes
+      register: sudheer
+    - name: store the output
+      ansible.builtin.debug:
+        msg: " the error that stored {{ sudheer }}"
+
