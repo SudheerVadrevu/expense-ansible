@@ -3,6 +3,10 @@
   become: yes
   vars:
     vinni: db.sudheerdevopsengineer.online
+  vars_prompt:
+  - name: rangola
+    password: please enter the password
+    private: no
   tasks:
     - name: installing my-sql
       ansible.builtin.dnf:
@@ -22,7 +26,7 @@
     - name: DB Connection
       community.mysql.mysql_info:
         login_user: root
-        login_password: ExpenseApp@1
+        login_password: "{{ rangola }}"
         login_host: "{{ vinni }}"
         filter: version
       ignore_errors: yes
@@ -30,5 +34,7 @@
     - name: store the output
       ansible.builtin.debug:
         msg: " the error that stored {{ sudheer }}"
-    
+   
+    - name: setup root and password
+      ansible.built.command: "mysql_secure_installation --set-root-pass {{ rangola }}"
 
