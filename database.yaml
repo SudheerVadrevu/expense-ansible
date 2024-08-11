@@ -5,7 +5,7 @@
     vinni: db.sudheerdevopsengineer.online
   vars_prompt:
   - name: rangola
-    password: please enter the password
+    prompt: please enter the password
     private: no
   tasks:
     - name: installing my-sql
