@@ -1,6 +1,8 @@
 - name: configure mysql database
   hosts: db
   become: yes
+  vars:
+    vinni: db.sudheerdevopsengineer.online
   tasks:
     - name: installing my-sql
       ansible.builtin.dnf:
