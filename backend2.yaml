@@ -1,6 +1,9 @@
 - name: configure the backend services
   hosts: backend
   become: yes
+  vars:
+    bunny: ExpenseApp@1
+    tabu: db.sudheerdevopsengineer.online
   tasks:
    - name: disable the nodejs
      ansible.builtin.command: dnf module disable nodejs -y
@@ -43,3 +46,15 @@
       src: backend.service
       dest: /etc/systemd/system/backend.service
     
+   - name: install python mysql dependices
+     ansible.builtin.pip:
+      name:
+      - PyMySQL
+      - cryptography
+     executable: pip3.9
+   
+   - name: import data into mysql
+     community.mysql.mysql_db:
+      local_user: root
+      local_password: "{{ bunny }}"
+      local_hosts: "{{ tabu }}"
