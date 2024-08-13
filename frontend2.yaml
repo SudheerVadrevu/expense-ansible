@@ -2,7 +2,7 @@
   hosts: frontend
   become: yes
   tasks:
-    - name: download the latest nginx 
+    - name: install the latest nginx server
       ansible.builtin.dnf:
         name: nginx
         state: latest
@@ -17,4 +17,4 @@
       ansible.builtin.file:
         path: usr/share/nginx/html
         state: absent
-
+    
